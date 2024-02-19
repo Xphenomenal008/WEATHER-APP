@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/871f9d0282.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="cointaner h-screen w-[100%] border-solid border-2 border-white  flex justify-center border bg-slate-500 rounded">
+        <form class="form mt-10 bg-white h-[70%] w-[70%] lg:w-[50%] flex flex-col  border-solid border-2 rounded-md border-white items-center">
+             <div class="wether flex justify-center  h-[10%] w-[100%] border-solid border-2 rounded-2xl border-gray-400">
+                <input type="text" placeholder="enter your city name" class="h-[100%] border-none outline-0 font-semibold text-xl w-[80%] rounded-3xl pl-10 lg:pl-48" id="input">
+     <span class="flex items-center -ml-8"><i class="fa fa-search" aria-hidden="true"  > </i></span>
+             </div>
+             <div class="data flex mt-4" >
+                <div class="img"> <img src="images/clouds.jpg"  class="h-48" alt="hello" id="img"></div>
+               
+             </div>
+             <div class="deatils flex flex-col items-center mt-3">
+                <span class="temp text-6xl"> </span>
+                <span class="naam mt-2 text-4xl"> </span>
+                <div class="cimg flex flex-row ml-8   mt-6">
+                    <div class="1 flex mr-20"><img src="images/humidity.jpg" class="h-14" alt="" > <span class="state flex "></span></div>
+                    <div class="2 flex"> <img src="images/wind.jpg" class="h-14" alt="">   <span class="wind flex "></span></div>
+        
+                </div>
+              
+
+            </div>
+
+        </form>
+    </div>
+</body>
+<script>
+    let naam=document.querySelector(".naam")
+    let form=document.querySelector(".form")
+    let inputfield=document.getElementById("input").value
+    let img=document.getElementById("img")
+    let temp=document.querySelector(".temp")
+    let humidity=document.querySelector(".state")
+    let wind=document.querySelector(".wind")
+    
+     form.addEventListener("submit",(e)=>{
+e.preventDefault()
+ fun()
+ 
+     })
+
+   let fun=async()=>{
+    const API_KEY = `b4ceb2e15429526d8bf19d1d39183f04`
+    let inputfield=document.getElementById("input").value
+   let url= `https://api.openweathermap.org/data/2.5/weather?q=${inputfield}&appid=${API_KEY}&units=metric`
+     
+    
+let response= await fetch(url)
+let data= await response.json()
+ 
+ 
+if (data.cod=='404') {
+console.log("please enter valid data")
+}
+    temp.innerHTML= Math.round(data.main.temp)+ "°C"
+    humidity.innerHTML=data.main.humidity + "%"
+    wind.innerHTML=data.wind.speed+ " km/h"
+naam.innerHTML=data.name
+    if(data.weather[0].main==="Clouds"){
+        img.src="images/clouds.jpg"
+
+    }else if(data.weather[0].main==="Clear"){
+img.src="images/clear.jpg"
+    }
+    else if(data.weather[0].main==="Rain"){
+        img.src="images/rain.jpg"
+    }
+    else if(data.weather[0].main==="Drizzle"){
+        img.src="images/drizzle.jpg"
+    }
+    else if(data.weather[0].main==="Mist"){
+        img.src="images/mist.jpg"
+    }
+
+ 
+     }
+
+      
+</script>
+</html>
